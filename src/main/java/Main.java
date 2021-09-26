@@ -23,7 +23,7 @@ public class Main {
 
         andrewCart.addRealItem(car);
         andrewCart.addVirtualItem(disk);
-        //andrewCart.showItems();
+        andrewCart.showItems();
 
         Parser parser = new JsonParser();
         parser.writeToFile(andrewCart);
