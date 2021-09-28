@@ -21,7 +21,7 @@ class VirtualItemTest {
     @Tag("shop-test")
     @DisplayName("Check presence of Size on disk field")
     @Test
-    void check_presence_of_sizeOnDisk_field() {
+    void checkPresenceOfSizeField() {
         String expectedString = String.valueOf(disk.getSizeOnDisk());
 
         assertTrue(disk.toString().contains(expectedString));
@@ -30,7 +30,7 @@ class VirtualItemTest {
     @Tag("shop-test")
     @DisplayName("Check format of print")
     @Test
-    void check_format_of_print() {
+    void checkFormatOfPrint() {
 
         assertEquals(disk.toString(), String.format("Class: %s; Name: %s; Price: %s; Size on disk: %s",
                 disk.getClass(), disk.getName(), disk.getPrice(), disk.getSizeOnDisk()));

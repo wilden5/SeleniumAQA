@@ -1,11 +1,11 @@
 package shop;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CartTest {
 
     private Cart cart;
@@ -16,7 +16,7 @@ class CartTest {
     @Tag("shop-test")
     @BeforeAll
     void setUp() {
-        cart = new Cart("denis-cart");
+        cart = new Cart(RandomStringUtils.randomAlphabetic(5));
         car = new RealItem();
         car.setName("Opel");
         car.setPrice(12500);
@@ -39,26 +39,37 @@ class CartTest {
     @Tag("shop-test")
     @DisplayName("Check cart name and total price")
     @Test
-    @Order(1)
-    void check_cart_name_and_total_price() {
-        String expectedResult = "denis-cart";
-        double expectedResult2 = (car.getPrice() + disk.getPrice()) * 1.2;
+    void checkCartNameAndTotalPrice() {
+        String expectedCartName = cart.getCartName();
+        double expectedTotalPrice = (car.getPrice() + disk.getPrice()) * 1.2;
 
         assertAll("Cart name and price after cart creation",
-                () -> assertEquals(expectedResult, cart.getCartName()),
-                () -> assertEquals(expectedResult2, cart.getTotalPrice())
+                () -> assertEquals(expectedCartName, cart.getCartName()),
+                () -> assertEquals(expectedTotalPrice, cart.getTotalPrice())
         );
     }
 
     @Tag("shop-test")
     @DisplayName("Check add new item to cart")
     @Test
-    @Order(2)
-    void check_add_new_item_to_cart() {
+    void checkAddNewItemToCart() {
         double priceBefore = cart.getTotalPrice();
         cart.addVirtualItem(disk2);
 
-        Assertions.assertTrue(priceBefore < cart.getTotalPrice());
-        assertNotEquals(priceBefore, cart.getTotalPrice());
+        assertAll("Comparing priceBefore to actual price of cart",
+                () -> assertTrue(priceBefore < cart.getTotalPrice()),
+                () -> assertNotEquals(priceBefore, cart.getTotalPrice())
+        );
+    }
+
+    @Disabled
+    @Tag("shop-test")
+    @DisplayName("Check delete of item from cart")
+    @Test
+    void checkDeleteItemFromCart() {
+        double priceBeforeAddNewItem = cart.getTotalPrice();
+        cart.addVirtualItem(disk2);
+        cart.deleteVirtualItem(disk2);
+        assertEquals(priceBeforeAddNewItem, cart.getTotalPrice());
     }
 }

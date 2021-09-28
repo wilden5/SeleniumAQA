@@ -21,7 +21,7 @@ class RealItemTest {
     @Tag("shop-test")
     @DisplayName("Check presence of Weight field")
     @Test
-    void check_presence_of_weight_field() {
+    void checkPresenceOfWeightField() {
         String expectedString = String.valueOf(car.getWeight());
 
         assertTrue(car.toString().contains(expectedString));
@@ -30,7 +30,7 @@ class RealItemTest {
     @Tag("shop-test")
     @DisplayName("Check format of print")
     @Test
-    void check_format_of_print() {
+    void checkFormatOfPrint() {
 
         assertEquals(car.toString(), String.format("Class: %s; Name: %s; Price: %s; Weight: %s",
                 car.getClass(), car.getName(), car.getPrice(), car.getWeight()));

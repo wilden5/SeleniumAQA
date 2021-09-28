@@ -1,13 +1,14 @@
 package parser;
 
+import com.google.gson.Gson;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import shop.Cart;
 import shop.RealItem;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class JsonParserTest {
 
+    private Gson gson;
     private JsonParser jsonParser;
     private Cart cart;
     private RealItem car;
@@ -27,8 +29,9 @@ class JsonParserTest {
     @Tag("parser-test")
     @BeforeAll
     void setUp() {
+        gson = new Gson();
         jsonParser = new JsonParser();
-        cart = new Cart("denis-cart");
+        cart = new Cart(RandomStringUtils.randomAlphabetic(5));
         pathToFile = Paths.get("src", "main", "resources", cart.getCartName());
         fileExtension = ".json";
 
@@ -42,41 +45,47 @@ class JsonParserTest {
 
     @Tag("parser-test")
     @AfterAll
-    void clean_data() throws IOException {
+    void cleanData() throws IOException {
         Files.deleteIfExists(Paths.get(pathToFile + fileExtension));
     }
 
     @Tag("parser-test")
     @DisplayName("Check write to file")
     @Test
-    @Order(1)
-    void check_write_to_file() {
+    void checkWriteToFile() throws IOException {
         jsonParser.writeToFile(cart);
+        Reader reader = new FileReader(pathToFile + fileExtension);
+        Cart actualCart = gson.fromJson(reader, Cart.class);
+        reader.close();
 
-        assertTrue(Files.exists(Paths.get(pathToFile + fileExtension)));
+        assertAll("Write to file, verification of content",
+                () -> assertFalse(Files.exists(Paths.get(pathToFile + fileExtension, "File not found!"))),
+                () -> assertEquals(cart.getCartName(), actualCart.getCartName()),
+                () -> assertEquals(cart.getTotalPrice(), actualCart.getTotalPrice())
+        );
     }
 
-    @Disabled
     @Tag("parser-test")
     @DisplayName("Check read exist file")
     @Test
-    @Order(2)
-    void read_exist_file() {
-        //double expectedPrice = 15000; - could be used as additional verification
-        Cart expectedResult = jsonParser.readFromFile(new File(pathToFile + fileExtension));
+    void readExistFile() throws IOException {
+        FileWriter writer = new FileWriter(pathToFile + fileExtension);
+        writer.write(gson.toJson(cart));
+        writer.close();
+        Cart expectedCart = jsonParser.readFromFile(new File(pathToFile + fileExtension));
 
-        assertEquals(expectedResult.getTotalPrice(), cart.getTotalPrice());
+        assertAll(
+                () -> assertEquals(expectedCart.getTotalPrice(), cart.getTotalPrice()),
+                () -> assertEquals(expectedCart.getCartName(), cart.getCartName())
+        );
     }
 
     @Tag("parser-test")
     @DisplayName("Check NoSuchFileException")
     @ParameterizedTest
-    @Order(3)
-    @ValueSource(strings = {"cart1", "cart2", "cart3", "cart4", "cart5"})
-    void check_NoSuchFileException(String fileName) {
-        Path path = Paths.get("src", "main", "resources", fileName);
+    @ValueSource(strings = {".doc", ".csv", ".xlsx", ".xls", ".txt"})
+    void checkException(String fileExtension) {
 
-        assertThrows(NoSuchFileException.class, () -> jsonParser.readFromFile(new File(path + fileExtension)));
+        assertThrows(NoSuchFileException.class, () -> jsonParser.readFromFile(new File(pathToFile + fileExtension)));
     }
-
 }
