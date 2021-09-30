@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Smoke tests">
+    <parameter name="weight" value="3200"></parameter>
+    <test name="Tests of Parser and Shop">
+        <groups>
+            <run>
+                <include name="smoke"/>
+                <exclude name="parser"></exclude>
+            </run>
+        </groups>
+        <classes>
+            <class name="TestNG.shop.RealItemTest"/>
+            <class name="TestNG.shop.VirtualItemTest"/>
+            <class name="TestNG.shop.CartTest"/>
+            <class name="TestNG.parser.JsonParserTest"/>
+        </classes>
+    </test>
+</suite>

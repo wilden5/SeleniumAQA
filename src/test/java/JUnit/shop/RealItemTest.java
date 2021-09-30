@@ -1,6 +1,7 @@
-package shop;
+package JUnit.shop;
 
 import org.junit.jupiter.api.*;
+import shop.RealItem;
 
 import static org.junit.jupiter.api.Assertions.*;
 
