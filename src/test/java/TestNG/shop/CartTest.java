@@ -21,7 +21,6 @@ public class CartTest {
 
     @BeforeClass(alwaysRun = true, groups = {"shop", "smoke", "cart"})
     void setUp() {
-        softAssert = new SoftAssert();
         cart = new Cart(RandomStringUtils.randomAlphabetic(5));
         car = new RealItem();
         car.setName("Audi");
@@ -44,6 +43,7 @@ public class CartTest {
 
     @Test(testName = "Check cart name and total price", groups = {"shop", "smoke", "cart"})
     void checkCartNameAndTotalPrice() {
+        softAssert = new SoftAssert();
         String expectedCartName = cart.getCartName();
         double expectedTotalPrice = (car.getPrice() + disk.getPrice()) * 1.2;
 

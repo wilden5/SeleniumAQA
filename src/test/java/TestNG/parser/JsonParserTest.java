@@ -27,7 +27,6 @@ public class JsonParserTest {
 
     @BeforeClass(alwaysRun = true, groups = {"parser", "smoke"})
     void setUp() {
-        softAssert = new SoftAssert();
         gson = new Gson();
         jsonParser = new JsonParser();
         cart = new Cart(RandomStringUtils.randomAlphabetic(5));
@@ -49,6 +48,7 @@ public class JsonParserTest {
 
     @Test(testName = "Check write to file", groups = {"parser", "smoke"})
     void checkWriteToFile() throws IOException {
+        softAssert = new SoftAssert();
         jsonParser.writeToFile(cart);
         Reader reader = new FileReader(pathToFile + fileExtension);
         Cart actualCart = gson.fromJson(reader, Cart.class);
@@ -62,6 +62,7 @@ public class JsonParserTest {
 
     @Test(testName = "Check read exist file", groups = {"parser", "smoke"})
     void readExistFile() throws IOException {
+        softAssert = new SoftAssert();
         FileWriter writer = new FileWriter(pathToFile + fileExtension);
         writer.write(gson.toJson(cart));
         writer.close();
@@ -69,6 +70,7 @@ public class JsonParserTest {
 
         softAssert.assertEquals(cart.getTotalPrice(), expectedCart.getTotalPrice(), "Cart name not same");
         softAssert.assertEquals(cart.getCartName(), expectedCart.getCartName(), "Cart totalPrice not same");
+        softAssert.assertAll();
     }
 
     @Test(testName = "Check exception", groups = {"parser", "smoke"}, dataProvider = "file extensions")
