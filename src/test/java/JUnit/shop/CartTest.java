@@ -1,7 +1,10 @@
-package shop;
+package JUnit.shop;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
+import shop.Cart;
+import shop.RealItem;
+import shop.VirtualItem;
 
 import static org.junit.jupiter.api.Assertions.*;
 

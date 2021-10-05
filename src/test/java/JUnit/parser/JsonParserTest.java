@@ -1,10 +1,12 @@
-package parser;
+package JUnit.parser;
 
 import com.google.gson.Gson;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import parser.JsonParser;
+import parser.NoSuchFileException;
 import shop.Cart;
 import shop.RealItem;
 
