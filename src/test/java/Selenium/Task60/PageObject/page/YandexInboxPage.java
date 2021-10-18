@@ -10,7 +10,7 @@ public class YandexInboxPage {
 
     private final WebDriver driver;
     private final By messageBox = By.xpath("//div[@data-key='box=left-box']");
-    private final By userMenu = By.xpath("(//span[@class='user-account__name']/following-sibling::div");
+    private final By userMenu = By.xpath("//span[@class='user-account__name']/following-sibling::div");
     private final By logoutButton = By.xpath("//a[contains(@class, 'item_action_exit')]");
 
     public YandexInboxPage() {
