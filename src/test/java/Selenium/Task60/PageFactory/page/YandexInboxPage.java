@@ -1,5 +1,6 @@
-package Selenium.Task60.PageFactory.pages;
+package Selenium.Task60.PageFactory.page;
 
+import Selenium.Task60.PageObject.WebDriverSingleton;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,14 +15,14 @@ public class YandexInboxPage {
     @FindBy(xpath = "//div[@data-key='box=left-box']")
     private WebElement messageBox;
 
-    @FindBy(xpath = "(//div[@class='user-pic user-pic_has-plus_ user-account__pic'])[1]")
+    @FindBy(xpath = "//span[@class='user-account__name']/following-sibling::div")
     private WebElement userMenu;
 
     @FindBy(xpath = "//a[contains(@class, 'item_action_exit')]")
     private WebElement logoutButton;
 
-    public YandexInboxPage(WebDriver driver) {
-        this.driver = driver;
+    public YandexInboxPage() {
+        this.driver = WebDriverSingleton.getInstance().getDriver();
         PageFactory.initElements(driver, this);
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOf(messageBox));
@@ -30,6 +31,6 @@ public class YandexInboxPage {
     public YandexSignInPage logout() {
         userMenu.click();
         logoutButton.click();
-        return new YandexSignInPage(driver);
+        return new YandexSignInPage();
     }
 }

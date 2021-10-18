@@ -1,5 +1,6 @@
-package Selenium.Task60.PageFactory.pages;
+package Selenium.Task60.PageFactory.page;
 
+import Selenium.Task60.PageObject.WebDriverSingleton;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,16 +10,17 @@ public class YandexEntryPage {
 
     private final WebDriver driver;
 
-    @FindBy(xpath = "//div[@class='HeadBanner-ButtonsWrapper']/a[2]")
+    @FindBy(xpath = "//a[contains(@href, 'auth')]")
     private WebElement loginButton;
 
-    public YandexEntryPage(WebDriver driver) {
-        this.driver = driver;
+    public YandexEntryPage() {
+        this.driver = WebDriverSingleton.getInstance().getDriver();
+        driver.get("https://mail.yandex.com/");
         PageFactory.initElements(driver, this);
     }
 
     public YandexSignInPage navigateToSignInPage() {
         loginButton.click();
-        return new YandexSignInPage(driver);
+        return new YandexSignInPage();
     }
 }
