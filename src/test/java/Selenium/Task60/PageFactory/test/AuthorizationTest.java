@@ -7,7 +7,7 @@ import Selenium.Task60.PageObject.WebDriverSingleton;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 
-public class AuthorizationTests {
+public class AuthorizationTest {
 
     private WebDriver driver;
     private YandexEntryPage yandexEntryPage;
