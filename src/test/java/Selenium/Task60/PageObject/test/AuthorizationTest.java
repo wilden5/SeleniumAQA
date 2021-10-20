@@ -8,7 +8,7 @@ import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 
-public class AuthorizationTest extends TestBase {
+public class AuthorizationTest extends BaseTest {
 
     private YandexEntryPage yandexEntryPage;
     private YandexSignInPage yandexSignInPage;

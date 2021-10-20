@@ -9,7 +9,7 @@ import org.openqa.selenium.TakesScreenshot;
 import java.io.File;
 import java.io.IOException;
 
-public class TestBase {
+public class BaseTest {
 
     public void createNewFolder(String path) {
         File dir = new File(path);
