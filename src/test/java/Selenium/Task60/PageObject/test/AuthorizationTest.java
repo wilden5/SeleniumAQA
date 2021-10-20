@@ -5,18 +5,17 @@ import Selenium.Task60.PageObject.page.YandexEntryPage;
 import Selenium.Task60.PageObject.page.YandexInboxPage;
 import Selenium.Task60.PageObject.page.YandexSignInPage;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
 
-public class AuthorizationTest {
+import java.io.IOException;
 
-    //private WebDriver driver;
+public class AuthorizationTest extends TestBase {
+
     private YandexEntryPage yandexEntryPage;
     private YandexSignInPage yandexSignInPage;
     private YandexInboxPage yandexInboxPage;
 
     @BeforeEach
     void setUp() {
-        //driver = WebDriverSingleton.getInstance().getDriver();
         yandexEntryPage = new YandexEntryPage();
     }
 
@@ -27,12 +26,13 @@ public class AuthorizationTest {
 
     @DisplayName("Login Test Yandex")
     @Test
-    void loginTestYandex() {
+    void loginTestYandex() throws IOException {
         yandexSignInPage = yandexEntryPage.navigateToSignInPage();
-        yandexInboxPage = yandexSignInPage.login("safdfsdffsdfsdf", "1799aaa");
+        yandexInboxPage = yandexSignInPage.login("ser2223rer", "0177aaa");
 
         Assertions.assertTrue(WebDriverSingleton.getInstance().getDriver().getTitle().contains("Inbox")
                 , "You are on wrong page. Please check the page!");
+        createScreenshot("yandex_inbox_page");
     }
 
     @DisplayName("Logout Test Yandex")
