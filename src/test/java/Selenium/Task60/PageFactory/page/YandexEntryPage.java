@@ -9,13 +9,14 @@ import org.openqa.selenium.support.PageFactory;
 public class YandexEntryPage {
 
     private final WebDriver driver;
+    private final static String INITIAL_URL = "https://mail.yandex.com/";
 
     @FindBy(xpath = "//a[contains(@href, 'auth')]")
     private WebElement loginButton;
 
     public YandexEntryPage() {
         this.driver = WebDriverSingleton.getInstance().getDriver();
-        driver.get("https://mail.yandex.com/");
+        driver.get(INITIAL_URL);
         PageFactory.initElements(driver, this);
     }
 

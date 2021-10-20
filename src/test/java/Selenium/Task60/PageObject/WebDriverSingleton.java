@@ -8,14 +8,11 @@ import java.util.concurrent.TimeUnit;
 
 public class WebDriverSingleton {
 
-    private final WebDriver driver;
+    private WebDriver driver;
     private static WebDriverSingleton webDriverSingleton;
 
     private WebDriverSingleton() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+
     }
 
     public static WebDriverSingleton getInstance() {
@@ -26,6 +23,13 @@ public class WebDriverSingleton {
     }
 
     public WebDriver getDriver() {
+        if (driver == null) {
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+            driver.manage().window().maximize();
+            driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            return driver;
+        }
         return driver;
     }
 

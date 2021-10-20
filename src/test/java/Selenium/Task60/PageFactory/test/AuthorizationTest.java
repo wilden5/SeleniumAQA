@@ -9,14 +9,12 @@ import org.openqa.selenium.WebDriver;
 
 public class AuthorizationTest {
 
-    private WebDriver driver;
     private YandexEntryPage yandexEntryPage;
     private YandexSignInPage yandexSignInPage;
     private YandexInboxPage yandexInboxPage;
 
     @BeforeEach
     void setUp() {
-        driver = WebDriverSingleton.getInstance().getDriver();
         yandexEntryPage = new YandexEntryPage();
     }
 
@@ -31,7 +29,7 @@ public class AuthorizationTest {
         yandexSignInPage = yandexEntryPage.navigateToSignInPage();
         yandexInboxPage = yandexSignInPage.login("safdfsdffsdfsdf", "1799aaa");
 
-        Assertions.assertTrue(driver.getTitle().contains("Inbox")
+        Assertions.assertTrue(WebDriverSingleton.getInstance().getDriver().getTitle().contains("Inbox")
                 , "You are on wrong page. Please check the page!");
     }
 
@@ -42,7 +40,7 @@ public class AuthorizationTest {
         yandexInboxPage = yandexSignInPage.login("wilden.man", "190fF23f3");
         yandexInboxPage.logout();
 
-        Assertions.assertTrue(driver.getTitle().contains("Authorization")
+        Assertions.assertTrue(WebDriverSingleton.getInstance().getDriver().getTitle().contains("Authorization")
                 , "You are on wrong page. Please check the page!");
     }
 }
