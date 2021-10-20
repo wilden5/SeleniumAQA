@@ -34,15 +34,15 @@ public class TableSearchTest {
 
     @ParameterizedTest
     @CsvSource({"25, 100000"})
-    public void tableSearch(int age, int salary) {
+    public void tableSearch(int targetAge, int targetSalary) {
         driver.get("https://demo.seleniumeasy.com/table-sort-search-demo.html");
         Select dropdown = new Select(driver.findElement(By.xpath("//select[@name='example_length']")));
         dropdown.selectByValue("10");
-        List<Employee> employees = getData(age, salary);
+        List<Employee> employees = sortedList(targetAge, targetSalary);
         employees.stream().forEach(System.out::println);
     }
 
-    private List<Employee> getData(int targetAge, int targetSalary) {
+    private List<Employee> sortedList(int targetAge, int targetSalary) {
         List<Employee> employees = new ArrayList<>();
         int numOfRows = driver.findElements(By.xpath("//table[@id='example']//tbody/tr")).size();
         for (int i = 1; i <= numOfRows; i++) {
@@ -53,11 +53,11 @@ public class TableSearchTest {
             String salary = driver.findElement(By.xpath("//tbody//tr//td[6]")).getText()
                     .substring(1).replace("/y", "").replace(",", "");
 
-            int a = Integer.parseInt(age);
-            int s = Integer.parseInt(salary);
+            int convertedAge = Integer.parseInt(age);
+            int convertedSalary = Integer.parseInt(salary);
 
-            if (a > targetAge && s <= targetSalary) {
-                employees.add(new Employee(name, position, office, a, s));
+            if (convertedAge > targetAge && convertedSalary <= targetSalary) {
+                employees.add(new Employee(name, position, office, convertedAge, convertedSalary));
 
             }
             WebElement buttonNext = driver.findElement(By.id("example_next"));
