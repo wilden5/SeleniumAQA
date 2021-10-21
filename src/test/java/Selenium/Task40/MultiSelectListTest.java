@@ -36,13 +36,12 @@ public class MultiSelectListTest {
         driver.get("https://demo.seleniumeasy.com/basic-select-dropdown-demo.html");
         WebElement list = driver.findElement(By.xpath("//select[@id='multi-select']"));
         Select multiSelectList = new Select(list);
-        multiSelectList.selectByVisibleText("Florida");
-        multiSelectList.selectByVisibleText("Ohio");
-        multiSelectList.selectByVisibleText("Texas");
-
+        List<String> expectedOptions = new ArrayList<>(Arrays.asList("Florida", "Ohio", "Texas"));
+        for (String state : expectedOptions) {
+            multiSelectList.selectByVisibleText(state);
+        }
         List<String> selectedOptions = multiSelectList.getAllSelectedOptions().stream()
                 .map(WebElement::getText).collect(Collectors.toList());
-        List<String> expectedOptions = new ArrayList<>(Arrays.asList("Florida", "Ohio", "Texas"));
 
         Assertions.assertEquals(expectedOptions, selectedOptions);
     }

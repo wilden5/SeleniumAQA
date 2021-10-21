@@ -46,19 +46,22 @@ public class TableSearchTest {
         List<Employee> employees = new ArrayList<>();
         int numOfRows = driver.findElements(By.xpath("//table[@id='example']//tbody/tr")).size();
         for (int i = 1; i <= numOfRows; i++) {
-            String name = driver.findElement(By.xpath("//tbody//tr//td[1]")).getText();
-            String position = driver.findElement(By.xpath("//tbody//tr//td[2]")).getText();
-            String office = driver.findElement(By.xpath("//tbody//tr//td[3]")).getText();
-            String age = driver.findElement(By.xpath("//tbody//tr//td[4]")).getText();
-            String salary = driver.findElement(By.xpath("//tbody//tr//td[6]")).getText()
-                    .substring(1).replace("/y", "").replace(",", "");
+            List<WebElement> table = driver.findElements(By.xpath("//tbody/tr"));
+            for (WebElement element : table) {
+                String name = element.findElement(By.xpath("td[1]")).getText();
+                String position = element.findElement(By.xpath("td[2]")).getText();
+                String office = element.findElement(By.xpath("td[3]")).getText();
+                String age = element.findElement(By.xpath("td[4]")).getText();
+                String salary = element.findElement(By.xpath("td[6]")).getText()
+                        .substring(1).replace("/y", "").replace(",", "");
 
-            int convertedAge = Integer.parseInt(age);
-            int convertedSalary = Integer.parseInt(salary);
+                int convertedAge = Integer.parseInt(age);
+                int convertedSalary = Integer.parseInt(salary);
 
-            if (convertedAge > targetAge && convertedSalary <= targetSalary) {
-                employees.add(new Employee(name, position, office, convertedAge, convertedSalary));
+                if (convertedAge > targetAge && convertedSalary <= targetSalary) {
+                    employees.add(new Employee(name, position, office));
 
+                }
             }
             WebElement buttonNext = driver.findElement(By.id("example_next"));
             buttonNext.click();

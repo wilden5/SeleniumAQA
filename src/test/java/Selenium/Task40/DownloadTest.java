@@ -5,19 +5,20 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DownloadTest {
 
     private WebDriver driver;
+    private WebDriverWait webDriverWait;
 
     @BeforeEach
     void setUp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        webDriverWait = new WebDriverWait(driver, 20);
     }
 
     @AfterEach
@@ -30,15 +31,19 @@ public class DownloadTest {
         driver.get("https://demo.seleniumeasy.com/bootstrap-download-progress-demo.html");
         driver.findElement(By.xpath("//button[@id='cricle-btn']")).click();
 
-        while (!driver.findElement(By.xpath("//div[@class='percenttext']")).getText().equals("100")) {
-            int progress = Integer.parseInt(driver.findElement(By
-                    .xpath("//div[@class='percenttext']")).getText().replace("%", ""));
-
-            if (progress >= 50) {
-                driver.navigate().refresh();
-                return;
-            }
-        }
-        Assertions.assertEquals("0",driver.findElement(By.xpath("//div[@class='percenttext']")).getText());
+        webDriverWait.until(new ExpectedCondition<Boolean>() {
+                                public Boolean apply(WebDriver driver) {
+                                    int progress = Integer.parseInt(driver.findElement(By
+                                            .xpath("//div[@class='percenttext']")).getText()
+                                            .replace("%", ""));
+                                    if (progress >= 50) {
+                                        driver.navigate().refresh();
+                                        return true;
+                                    }
+                                    return false;
+                                }
+                            }
+        );
+        Assertions.assertEquals("0%", driver.findElement(By.xpath("//div[@class='percenttext']")).getText());
     }
 }
