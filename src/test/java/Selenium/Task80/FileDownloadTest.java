@@ -16,8 +16,8 @@ import java.util.Map;
 
 public class FileDownloadTest extends BaseTest {
 
-    private static final String PATH_TO_FILE_DIRECTORY = "C:\\Users\\words\\Desktop\\UnitTesting\\" +
-            "UnitTesting-master\\src\\test\\java\\Selenium\\Files";
+    private static final String PATH_TO_FOLDER = System.getProperty("user.dir") + "\\src\\test\\java\\Selenium\\Files";
+
     private static final String START_URL = "http://demo.automationtesting.in/FileDownload.html#google_vignette";
 
     private WebDriver driver;
@@ -46,14 +46,14 @@ public class FileDownloadTest extends BaseTest {
     void fileDownloadChrome() throws InterruptedException {
         ChromeOptions options = new ChromeOptions();
         Map<String, Object> prefs = new HashMap<String, Object>();
-        prefs.put("download.default_directory", PATH_TO_FILE_DIRECTORY);
+        prefs.put("download.default_directory", PATH_TO_FOLDER);
         options.setExperimentalOption("prefs", prefs);
 
         driver = new ChromeDriver(options);
         driver.get(START_URL);
         driver.findElement(By.xpath("//a[@type='button']")).click();
         Thread.sleep(15000);
-        checkFileInFolder(PATH_TO_FILE_DIRECTORY);
+        checkFileInFolder(PATH_TO_FOLDER);
 
         Assertions.assertTrue(isFound, "Downloaded file is not found");
     }
@@ -65,14 +65,14 @@ public class FileDownloadTest extends BaseTest {
         options.addPreference("pdfjs.disabled", true);
         options.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/octet-stream");
         options.addPreference("browser.download.manager.showWhenStarting", false);
-        options.addPreference("browser.download.dir", PATH_TO_FILE_DIRECTORY);
+        options.addPreference("browser.download.dir", PATH_TO_FOLDER);
         options.addPreference("browser.download.folderList", 2);
 
         driver = new FirefoxDriver(options);
         driver.get(START_URL);
         driver.findElement(By.xpath("//a[@type='button']")).click();
         Thread.sleep(15000);
-        checkFileInFolder(PATH_TO_FILE_DIRECTORY);
+        checkFileInFolder(PATH_TO_FOLDER);
 
         Assertions.assertTrue(isFound, "Downloaded file is not found");
     }
