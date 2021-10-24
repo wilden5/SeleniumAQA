@@ -33,7 +33,7 @@ public class TableSearchTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"25, 100000"})
+    @CsvSource({"60, 330000"})
     public void tableSearch(int targetAge, int targetSalary) {
         driver.get("https://demo.seleniumeasy.com/table-sort-search-demo.html");
         Select dropdown = new Select(driver.findElement(By.xpath("//select[@name='example_length']")));
@@ -64,6 +64,9 @@ public class TableSearchTest {
                 }
             }
             WebElement buttonNext = driver.findElement(By.id("example_next"));
+            if (buttonNext.getAttribute("class").contains("disabled")) {
+                break;
+            }
             buttonNext.click();
         }
         return employees;
