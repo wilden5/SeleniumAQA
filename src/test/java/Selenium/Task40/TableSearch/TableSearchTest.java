@@ -44,10 +44,13 @@ public class TableSearchTest {
 
     private List<Employee> sortedList(int targetAge, int targetSalary) {
         List<Employee> employees = new ArrayList<>();
-        int numOfRows = driver.findElements(By.xpath("//table[@id='example']//tbody/tr")).size();
-        for (int i = 1; i <= numOfRows; i++) {
-            List<WebElement> table = driver.findElements(By.xpath("//tbody/tr"));
-            for (WebElement element : table) {
+        List<WebElement> pages = driver.findElements(By.xpath("//div[@id='example_paginate']/span/child::a"));
+
+        for (WebElement page : pages) {
+            List<WebElement> rows = driver.findElements(By.xpath("//tbody/tr"));
+            WebElement buttonNext = driver.findElement(By.xpath("//a[@id='example_next']"));
+
+            for (WebElement element : rows) {
                 String name = element.findElement(By.xpath("td[1]")).getText();
                 String position = element.findElement(By.xpath("td[2]")).getText();
                 String office = element.findElement(By.xpath("td[3]")).getText();
@@ -60,12 +63,7 @@ public class TableSearchTest {
 
                 if (convertedAge > targetAge && convertedSalary <= targetSalary) {
                     employees.add(new Employee(name, position, office));
-
                 }
-            }
-            WebElement buttonNext = driver.findElement(By.id("example_next"));
-            if (buttonNext.getAttribute("class").contains("disabled")) {
-                break;
             }
             buttonNext.click();
         }
