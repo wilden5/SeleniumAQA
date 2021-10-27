@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class SeleniumGridTest {
 
-    WebDriver driver;
+    private WebDriver driver;
     private WebDriverWait webDriverWait;
 
     @BeforeEach
