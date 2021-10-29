@@ -1,6 +1,7 @@
 package Selenium.Task60.PageObject.page;
 
 import Selenium.Task60.PageObject.WebDriverSingleton;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -15,6 +16,7 @@ public class YandexSignInPage {
         this.driver = WebDriverSingleton.getInstance().getDriver();
     }
 
+    @Step
     public YandexInboxPage login(String userName, String userPassword) {
         driver.findElement(loginField).sendKeys(userName);
         driver.findElement(sigInButton).click();

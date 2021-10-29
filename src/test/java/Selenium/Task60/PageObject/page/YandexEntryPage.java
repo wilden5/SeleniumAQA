@@ -1,6 +1,7 @@
 package Selenium.Task60.PageObject.page;
 
 import Selenium.Task60.PageObject.WebDriverSingleton;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -15,6 +16,7 @@ public class YandexEntryPage {
         driver.get(INITIAL_URL);
     }
 
+    @Step
     public YandexSignInPage navigateToSignInPage() {
         driver.findElement(loginButton).click();
         return new YandexSignInPage();
