@@ -22,7 +22,7 @@ public class CartTest extends BaseTest {
                 .loginToAccount(Config.getProperty("db.login"), Config.getProperty("db.password"));
         cartPage = accountPage
                 .navigateToProductPage()
-                .addViaProductList(3);
+                .addViaProductList(3); // .addViaProductDetail(3); // second case of adding product using strategy
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(Config.getProperty("db.expected.cart.price"),
