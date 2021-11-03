@@ -1,7 +1,7 @@
 package FinalProject.page;
 
-import FinalProject.strategy.FromProductDetailPage;
-import FinalProject.strategy.FromProductPage;
+import FinalProject.strategy.ViaProductDetail;
+import FinalProject.strategy.ViaProductList;
 import FinalProject.strategy.CartContext;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -34,17 +34,17 @@ public class ProductPage {
         return new ProductDetailPage(driver);
     }
 
-    @Step("Add product to cart from Product page, amount: {count}")
-    public CartPage addProductToCartFromProductPage(int count) {
-        cartContext.setStrategy(new FromProductPage());
+    @Step("Add product to cart via Product list, amount: {count}")
+    public CartPage addViaProductList(int count) {
+        cartContext.setStrategy(new ViaProductList());
         cartContext.executeStrategy(count);
         driver.findElement(CART_BUTTON).click();
         return new CartPage(driver);
     }
 
-    @Step("Add product to cart from ProductDetail page, amount: {count}")
-    public CartPage addProductToCartFromProductDetailPage(int count) {
-        cartContext.setStrategy(new FromProductDetailPage());
+    @Step("Add product to cart via Product detail, amount: {count}")
+    public CartPage addViaProductDetail(int count) {
+        cartContext.setStrategy(new ViaProductDetail());
         cartContext.executeStrategy(count);
         driver.findElement(CART_BUTTON).click();
         return new CartPage(driver);
