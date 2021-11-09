@@ -17,6 +17,7 @@ public class CartPage {
     private static final By CART_ROW = By.xpath("//tr[contains(@class,'cart_item')]");
     private static final By PRICE_OF_PRODUCT = By.xpath("//td[@class='cart_total']/span");
     private static final By DELETE_BUTTON = By.xpath("//a[@class='cart_quantity_delete']");
+    private static final double ORDER_TAX = 2.0;
 
     public CartPage(WebDriver driver) {
         this.driver = driver;
@@ -28,8 +29,7 @@ public class CartPage {
     public String getTotalPriceOfCart() {
         List<WebElement> productPrice = driver.findElements(PRICE_OF_PRODUCT);
         DecimalFormat f = new DecimalFormat("##.00");
-        double tax = 2.0;
-        double totalPrice = tax;
+        double totalPrice = ORDER_TAX;
         for (WebElement p : productPrice) {
             String price = p.getText().replace("$", "").trim();
             double convertedPrice = Double.parseDouble(price);
@@ -39,13 +39,9 @@ public class CartPage {
     }
 
     @Step("Get number of product from cart")
-    public String getNumberOfProduct() {
+    public String getCartProductAmount() {
         List<WebElement> numberOfProduct = driver.findElements(CART_ROW);
-        int number = 0;
-        for (WebElement n : numberOfProduct) {
-            number++;
-        }
-        return String.valueOf(number);
+        return String.valueOf(numberOfProduct.size());
     }
 
     @Step("Delete product from cart") //for future implementation when cart state could be saved after logout

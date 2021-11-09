@@ -28,7 +28,7 @@ public class CartTest extends BaseTest {
                 () -> Assertions.assertEquals(Config.getProperty("db.expected.cart.price"),
                         cartPage.getTotalPriceOfCart(), "Cart total price not same as expected"),
                 () -> Assertions.assertEquals(Config.getProperty("db.expected.product.amount"),
-                        cartPage.getNumberOfProduct(), "Amount of product is not same as expected")
+                        cartPage.getCartProductAmount(), "Amount of product is not same as expected")
         );
     }
 }

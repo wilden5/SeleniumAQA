@@ -1,6 +1,7 @@
 package FinalProject.test;
 
 import FinalProject.page.AuthenticationPage;
+import FinalProject.util.Config;
 import FinalProject.util.TestListener;
 import FinalProject.util.WebDriverParameter;
 import FinalProject.util.WebDriverSingleton;

@@ -1,5 +1,6 @@
 package FinalProject.page;
 
+import FinalProject.strategy.AddToCartStrategy;
 import FinalProject.strategy.ViaProductDetail;
 import FinalProject.strategy.ViaProductList;
 import FinalProject.strategy.CartContext;
@@ -15,7 +16,7 @@ import java.util.List;
 public class ProductPage {
 
     private final WebDriver driver;
-    private CartContext cartContext = new CartContext();
+    private final CartContext CART_CONTEXT;
 
     private static final By PRODUCT_LABEL = By.xpath("//h5[@itemprop='name']/a");
     private static final By COMPARE_PRODUCT_BUTTON = By.xpath("//form[@class='compare-form']");
@@ -23,6 +24,7 @@ public class ProductPage {
 
     public ProductPage(WebDriver driver) {
         this.driver = driver;
+        CART_CONTEXT = new CartContext();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(COMPARE_PRODUCT_BUTTON));
     }
@@ -36,16 +38,17 @@ public class ProductPage {
 
     @Step("Add product to cart via Product list, amount: {count}")
     public CartPage addViaProductList(int count) {
-        cartContext.setStrategy(new ViaProductList());
-        cartContext.executeStrategy(count);
-        driver.findElement(CART_BUTTON).click();
-        return new CartPage(driver);
+        return addProduct(new ViaProductList(), count);
     }
 
     @Step("Add product to cart via Product detail, amount: {count}")
     public CartPage addViaProductDetail(int count) {
-        cartContext.setStrategy(new ViaProductDetail());
-        cartContext.executeStrategy(count);
+        return addProduct(new ViaProductDetail(), count);
+    }
+
+    private CartPage addProduct(AddToCartStrategy addToCartStrategy, int count) {
+        CART_CONTEXT.setStrategy(addToCartStrategy);
+        CART_CONTEXT.executeStrategy(count);
         driver.findElement(CART_BUTTON).click();
         return new CartPage(driver);
     }

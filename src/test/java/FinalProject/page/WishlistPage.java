@@ -49,8 +49,8 @@ public class WishlistPage {
     @Step("Check availability of the auto-created Wishlist")
     public boolean isAutoWishlistAccessible() {
         List<WebElement> nameOfRows = driver.findElements(WISHLIST_NAME);
-        for (WebElement n : nameOfRows) {
-            if (n.getText().equals("My wishlist")) {
+        for (WebElement nameOfRow : nameOfRows) {
+            if (nameOfRow.getText().equals("My wishlist")) {
                 return true;
             }
         }
@@ -60,7 +60,7 @@ public class WishlistPage {
     @Step("Delete existing Wishlist")
     public WishlistPage deleteExistingWishlist() {
         List<WebElement> rows = driver.findElements(WISHLIST_ROW);
-        for (WebElement r : rows) {
+        for (WebElement row : rows) {
             driver.findElement(REMOVE_WISHLIST_ROW).click();
             driver.switchTo().alert().accept();
         }

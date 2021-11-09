@@ -7,16 +7,16 @@ import java.util.Properties;
 
 public class Config {
 
-    private static final Properties property = new Properties();
+    private static final Properties PROPERTY = new Properties();
 
     static {
         InputStream fis = null;
 
         try {
             fis = new FileInputStream("src/test/resources/config.properties");
-            property.load(fis);
+            PROPERTY.load(fis);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             try {
                 fis.close();
@@ -27,6 +27,6 @@ public class Config {
     }
 
     public static String getProperty(String key) {
-        return property.getProperty(key);
+        return PROPERTY.getProperty(key);
     }
 }
