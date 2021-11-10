@@ -1,5 +1,6 @@
 package FinalProject.page;
 
+import FinalProject.util.WebDriverSingleton;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -23,8 +24,8 @@ public class WishlistPage {
     private static final By PRODUCT_LABEL_IN_WISHLIST = By.xpath("//p[@class='product-name']");
     private static final By WISHLIST_NAME_INPUT = By.xpath("//input[@id='name']");
 
-    public WishlistPage(WebDriver driver) {
-        this.driver = driver;
+    public WishlistPage() {
+        this.driver = WebDriverSingleton.getInstance().getDriver();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(SAVE_WISHLIST_BUTTON));
     }
@@ -43,7 +44,7 @@ public class WishlistPage {
     @Step("Navigate to shop Product page")
     public ProductPage navigateToProductPage() {
         driver.findElement(DRESSES_PRODUCT_BUTTON).click();
-        return new ProductPage(driver);
+        return new ProductPage();
     }
 
     @Step("Check availability of the auto-created Wishlist")

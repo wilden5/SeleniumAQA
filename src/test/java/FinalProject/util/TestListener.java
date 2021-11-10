@@ -1,6 +1,5 @@
 package FinalProject.util;
 
-import FinalProject.test.BaseTest;
 import io.qameta.allure.Attachment;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
@@ -17,12 +16,12 @@ public class TestListener implements TestWatcher {
 
     @Attachment(value = "{name}", type = "image/png")
     private byte[] captureScreenshot(String name) {
-        return ((TakesScreenshot) BaseTest.driver).getScreenshotAs(OutputType.BYTES);
+        return ((TakesScreenshot) WebDriverSingleton.getInstance().getDriver()).getScreenshotAs(OutputType.BYTES);
     }
 
     @Attachment(value = "Details", type = "text/plain")
     private String getEnvironmentDetails() {
-        Capabilities capabilities = ((RemoteWebDriver) BaseTest.driver).getCapabilities();
+        Capabilities capabilities = ((RemoteWebDriver) WebDriverSingleton.getInstance().getDriver()).getCapabilities();
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date date = new Date();
         return "Execute date: " + format.format((date)) +

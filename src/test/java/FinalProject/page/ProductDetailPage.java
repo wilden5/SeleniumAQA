@@ -1,5 +1,6 @@
 package FinalProject.page;
 
+import FinalProject.util.WebDriverSingleton;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,8 +16,8 @@ public class ProductDetailPage {
     private static final By CUSTOMER_ACCOUNT_BUTTON = By.xpath("//div[@class='header_user_info']/a");
     private static final By ADD_TO_CART_BUTTON = By.xpath("//button[@class='exclusive']");
 
-    public ProductDetailPage(WebDriver driver) {
-        this.driver = driver;
+    public ProductDetailPage() {
+        this.driver = WebDriverSingleton.getInstance().getDriver();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(ADD_TO_CART_BUTTON));
     }
@@ -32,6 +33,6 @@ public class ProductDetailPage {
     @Step("Navigate to User Account page")
     public AccountPage navigateToAccountPage() {
         driver.findElement(CUSTOMER_ACCOUNT_BUTTON).click();
-        return new AccountPage(driver);
+        return new AccountPage();
     }
 }

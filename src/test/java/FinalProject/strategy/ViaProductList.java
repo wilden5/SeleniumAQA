@@ -1,6 +1,6 @@
 package FinalProject.strategy;
 
-import FinalProject.test.BaseTest;
+import FinalProject.util.WebDriverSingleton;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -22,7 +22,7 @@ public class ViaProductList implements AddToCartStrategy {
     private static final String SCROLL_INTO_VIEW_ARGUMENT = "arguments[0].scrollIntoView();";
 
     public ViaProductList() {
-        driver = BaseTest.driver;
+        driver = WebDriverSingleton.getInstance().getDriver();
     }
 
     @Override

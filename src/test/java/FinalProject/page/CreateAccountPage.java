@@ -1,6 +1,7 @@
 package FinalProject.page;
 
 import FinalProject.util.CustomerInfo;
+import FinalProject.util.WebDriverSingleton;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,8 +24,8 @@ public class CreateAccountPage {
     private static final By MOBILE_PHONE_INPUT = By.xpath("//input[@id='phone_mobile']");
     private static final By SUBMIT_ACCOUNT_BUTTON = By.xpath("//button[@id='submitAccount']");
 
-    public CreateAccountPage(WebDriver driver) {
-        this.driver = driver;
+    public CreateAccountPage() {
+        this.driver = WebDriverSingleton.getInstance().getDriver();
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOfElementLocated(SUBMIT_ACCOUNT_BUTTON));
     }
@@ -43,6 +44,6 @@ public class CreateAccountPage {
         new Select(driver.findElement(STATE_SELECT)).selectByVisibleText(customer.getState());
         new Select(driver.findElement(COUNTRY_SELECT)).selectByVisibleText(customer.getCountry());
         driver.findElement(SUBMIT_ACCOUNT_BUTTON).click();
-        return new AccountPage(driver);
+        return new AccountPage();
     }
 }

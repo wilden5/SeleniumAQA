@@ -4,6 +4,7 @@ import FinalProject.page.CreateAccountPage;
 import FinalProject.page.AccountPage;
 import FinalProject.util.Config;
 import FinalProject.util.CustomerInfo;
+import FinalProject.util.WebDriverSingleton;
 import com.github.javafaker.Faker;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
@@ -35,6 +36,6 @@ public class CreateAccountTest extends BaseTest {
         accountPage = createAccountPage.finishRegistration(randomUser);
 
         Assertions.assertEquals(Config.getProperty("db.customer.account.url")
-                , driver.getCurrentUrl(), "Registration failed, check entered data");
+                , WebDriverSingleton.getInstance().getDriver().getCurrentUrl(), "Registration failed, check entered data");
     }
 }

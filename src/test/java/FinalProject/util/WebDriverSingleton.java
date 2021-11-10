@@ -17,10 +17,12 @@ import java.util.concurrent.TimeUnit;
 public class WebDriverSingleton {
 
     private WebDriver driver;
+    private WebDriverParameter parameter;
     private static WebDriverSingleton webDriverSingleton;
 
     private WebDriverSingleton() {
-
+        parameter = new WebDriverParameter("Chrome", false);
+        initDriver();
     }
 
     public static WebDriverSingleton getInstance() {
@@ -30,39 +32,58 @@ public class WebDriverSingleton {
         return webDriverSingleton;
     }
 
-    public WebDriver getDriverWithParameter(WebDriverParameter parameter) throws MalformedURLException {
+    private void initDriver() {
         if (parameter.getRemote()) {
-            DesiredCapabilities dc = null;
-            switch (parameter.getName()) {
-                case "Sauce":
-                    dc = DesiredCapabilities.chrome();
-                    dc.setCapability("platform", "macOS 10.15");
-                    dc.setCapability("version", "85");
-                    Map<String, Object> sauceOptions = new HashMap<>();
-                    dc.setCapability("sauce:options", sauceOptions);
-                    break;
-                case "Grid":
-                    dc = new DesiredCapabilities();
-                    dc.setBrowserName("chrome");
-                    dc.setPlatform(Platform.WINDOWS);
-                    break;
-            }
-            driver = new RemoteWebDriver(new URL(parameter.getUrl()), dc);
+            setRemoteDriver();
         } else {
-            switch (parameter.getName()) {
-                case "Chrome":
-                    WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver();
-                    break;
-                case "Firefox":
-                    WebDriverManager.firefoxdriver().setup();
-                    driver = new FirefoxDriver();
-                    break;
-            }
+            setLocalDriver();
         }
+        setDriverConfig();
+    }
+
+    private void setRemoteDriver() {
+        DesiredCapabilities dc = null;
+        switch (parameter.getName()) {
+            case "Sauce":
+                dc = DesiredCapabilities.chrome();
+                dc.setCapability("platform", "macOS 11.00");
+                dc.setCapability("version", "94");
+                Map<String, Object> sauceOptions = new HashMap<>();
+                dc.setCapability("sauce:options", sauceOptions);
+                break;
+            case "Grid":
+                dc = new DesiredCapabilities();
+                dc.setBrowserName("chrome");
+                dc.setPlatform(Platform.WINDOWS);
+                break;
+        }
+        try {
+            driver = new RemoteWebDriver(new URL(parameter.getUrl()), dc);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Hub's URL incorrect!");
+        }
+    }
+
+    private void setLocalDriver() {
+        switch (parameter.getName()) {
+            case "Chrome":
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
+                break;
+            case "Firefox":
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
+                break;
+        }
+    }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
+
+    private void setDriverConfig() {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        return driver;
     }
 
     public void setDownDriver() {

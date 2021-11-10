@@ -1,5 +1,6 @@
 package FinalProject.page;
 
+import FinalProject.util.WebDriverSingleton;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,8 +20,8 @@ public class CartPage {
     private static final By DELETE_BUTTON = By.xpath("//a[@class='cart_quantity_delete']");
     private static final double ORDER_TAX = 2.0;
 
-    public CartPage(WebDriver driver) {
-        this.driver = driver;
+    public CartPage() {
+        this.driver = WebDriverSingleton.getInstance().getDriver();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(CART_ROW));
     }

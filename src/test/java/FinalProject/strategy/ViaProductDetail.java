@@ -1,6 +1,6 @@
 package FinalProject.strategy;
 
-import FinalProject.test.BaseTest;
+import FinalProject.util.WebDriverSingleton;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,7 +21,7 @@ public class ViaProductDetail implements AddToCartStrategy {
     private static final String PRODUCT_LABEL = "//h5[@itemprop='name']/a";
 
     public ViaProductDetail() {
-        driver = BaseTest.driver;
+        driver = WebDriverSingleton.getInstance().getDriver();
     }
 
     @Override

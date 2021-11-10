@@ -17,8 +17,8 @@ public class AuthenticationPage {
     private final static By EXISTED_ACCOUNT_PASSWORD_INPUT = By.xpath("//input[@id='passwd']");
     private final static By SIGN_IN_BUTTON = By.xpath("//button[@id='SubmitLogin']");
 
-    public AuthenticationPage(WebDriver driver) {
-        this.driver = driver;
+    public AuthenticationPage() {
+        this.driver = WebDriverSingleton.getInstance().getDriver();
         driver.get(AUTH_PAGE_URL);
     }
 
@@ -27,7 +27,7 @@ public class AuthenticationPage {
         driver.findElement(CREATE_ACCOUNT_EMAIL_INPUT).sendKeys(emailAddress);
         driver.findElement(CREATE_ACCOUNT_BUTTON).click();
         //Thread.sleep(5000); for Firefox CreateAccountTest
-        return new CreateAccountPage(driver);
+        return new CreateAccountPage();
     }
 
     @Step("Credentials of existing account: {emailAddress}, {password}")
@@ -35,6 +35,6 @@ public class AuthenticationPage {
         driver.findElement(EXISTED_ACCOUNT_EMAIL_INPUT).sendKeys(emailAddress);
         driver.findElement(EXISTED_ACCOUNT_PASSWORD_INPUT).sendKeys(password);
         driver.findElement(SIGN_IN_BUTTON).click();
-        return new AccountPage(driver);
+        return new AccountPage();
     }
 }
