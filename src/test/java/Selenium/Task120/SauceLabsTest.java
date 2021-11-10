@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class SauceLabsTest {
 
-    private static final String KEY = "3d48d9c9-68d9-4fe5-a358-f5c7beaed287";
+    private static final String KEY = "b6b99e96-b108-4848-94b5-73648667338a";
     private static final String URL = "https://wilden24:" + KEY + "@ondemand.eu-central-1.saucelabs.com:443/wd/hub";
 
     private WebDriver driver;
